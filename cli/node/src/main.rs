@@ -1,13 +1,20 @@
+use runner::Runner;
+use su_receiver::SuReceiver;
+use tx_receiver::TxReceiver;
 
-
-fn run() {
-    {
-        // 
-
-    }
+struct Runtime;
+impl Runner for Runtime {
+    type TxReceiver = TxReceiver;
+    type SuReceiver = SuReceiver;
 }
 
-fn main() {
+fn run() {
+    Runtime::run();
+    loop {}
+}
+
+#[tokio::main]
+async fn main() {
     println!("Hello, world!");
     run();
 }

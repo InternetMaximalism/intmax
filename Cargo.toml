@@ -9,6 +9,8 @@ members = [
     "core/tx-receiver",
     "infra/json-rpc",
     "primitives/db",
+    "primitives/rpc",
+    "primitives/runner",
     "primitives/verkle",
     "primitives/zk",
 ]

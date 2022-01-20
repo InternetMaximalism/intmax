@@ -1,12 +1,12 @@
 use async_trait::async_trait;
 use runner::Receiver;
 
-pub struct TxReceiver;
+pub struct SuReceiver;
 
 #[async_trait]
-impl Receiver for TxReceiver {
+impl Receiver for SuReceiver {
     async fn run() {
-        println!("TODO:: Tx Receiver")
+        println!("TODO:: Su Receiver")
     }
 }
 
