@@ -4,7 +4,7 @@ Int max operator node
 
 ## How to Run
 ```sh
-cd core/node && cargo run
+cd cli/node && cargo run
 ```
 
 # Directory
