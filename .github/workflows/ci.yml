@@ -1,6 +1,6 @@
 on: [push]
 
-name: Integration
+name: ci
 
 jobs:
   native:

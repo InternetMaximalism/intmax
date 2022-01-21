@@ -16,5 +16,5 @@ members = [
 ]
 
 [profile.release]
-# Plasm runtime requires unwinding.
+# Intmax runtime requires unwinding.
 panic = "unwind"
