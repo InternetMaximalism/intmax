@@ -8,6 +8,7 @@ members = [
     "core/su-receiver",
     "core/tx-receiver",
     "infra/json-rpc",
+    "primitives/config",
     "primitives/db",
     "primitives/rpc",
     "primitives/runner",

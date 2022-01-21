@@ -3,9 +3,12 @@
 Int max operator node
 
 ## Prepara
+
+Install [rustup](https://www.rust-lang.org/tools/install).
+
 ```sh
 rustup override set nightly
-rustup update
+rustup update nightly
 ```
 
 ## How to Run
