@@ -1,5 +1,5 @@
 [package]
-name = "node"
+name = "intmax-node"
 version = "0.1.0"
 edition = "2021"
 authors = ["IntMax<dev@intmax.xyz>"]
@@ -8,7 +8,7 @@ description = "IntMax operator node."
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [[bin]]
-name = "node"
+name = "intmax-node"
 path = "src/main.rs"
 
 [dependencies]

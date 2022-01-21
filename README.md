@@ -2,6 +2,12 @@
 
 Int max operator node
 
+## Prepara
+```sh
+rustup override set nightly
+rustup update
+```
+
 ## How to Run
 ```sh
 cd cli/node && cargo run
