@@ -13,6 +13,7 @@ jobs:
       EXE_EXT: ${{ contains(matrix.os, 'windows') && '.exe' || '' }}
 
     steps:
+    - uses: actions/checkout@v2
     - name: Install LLVM (windows only)
       if: runner.os == 'Windows'
       run: choco install llvm
@@ -21,8 +22,7 @@ jobs:
       with:
         rust-version: 'nightly'
 
-    - name: Install rustfmt (windows only)
-      if: runner.os == 'Windows'
+    - name: Install rustfmt
       run: rustup component add rustfmt
 
     - name: Check targets are installed correctly
