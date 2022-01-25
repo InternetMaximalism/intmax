@@ -21,6 +21,10 @@ jobs:
       with:
         rust-version: 'nightly'
 
+    - name: Install rustfmt (windows only)
+      if: runner.os == 'Windows'
+      run: rustup component add rustfmt
+
     - name: Check targets are installed correctly
       run: rustup target list --installed
 
