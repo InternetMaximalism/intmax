@@ -14,6 +14,5 @@ path = "src/main.rs"
 [dependencies]
 tokio = { version = "1", features = ["full"] }
 
-runner = { path = "../../primitives/runner" }
-su-receiver = { path = "../../core/su-receiver" }
-tx-receiver = { path = "../../core/tx-receiver" }
+intmax-runner = { path = "../../primitives/runner" }
+intmax-config = { path = "../../primitives/config" }

@@ -1,11 +1,7 @@
-use async_trait::async_trait;
-use runner::Receiver;
-
 pub struct TxReceiver;
 
-#[async_trait]
-impl Receiver for TxReceiver {
-    async fn run() {
+impl TxReceiver {
+    pub fn run() {
         println!("TODO:: Tx Receiver")
     }
 }

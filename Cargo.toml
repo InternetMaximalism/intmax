@@ -7,13 +7,14 @@ members = [
     "core/query-receiver",
     "core/su-receiver",
     "core/tx-receiver",
-    "infra/json-rpc",
     "primitives/config",
     "primitives/db",
     "primitives/rpc",
     "primitives/runner",
     "primitives/verkle",
     "primitives/zk",
+    "infra/json-rpc-api",
+    "infra/json-rpc-servers",
 ]
 
 [profile.release]

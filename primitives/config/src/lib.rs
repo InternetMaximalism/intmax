@@ -3,7 +3,7 @@ use serde_derive::Deserialize;
 
 #[derive(Debug, Deserialize)]
 pub struct RpcServerConfig {
-    pub port: u32,
+    pub port: u16,
     pub ip: String,
 }
 
@@ -19,14 +19,13 @@ pub enum ConfigKind {
 }
 
 impl Config {
-    fn new(kind: ConfigKind) -> Result<Self, ConfigError> {
+    pub fn new(kind: ConfigKind) -> Result<Self, ConfigError> {
         let name = match kind {
             ConfigKind::TEST => "config_test",
-            ConfigKind::DEV => "config_dev",
+            ConfigKind::DEV => "config",
             ConfigKind::MAIN => "config",
         };
         let mut s = ConfigRs::new();
-        println!("new");
         println!(
             "root: {}",
             project_root::get_project_root().unwrap().to_str().unwrap()

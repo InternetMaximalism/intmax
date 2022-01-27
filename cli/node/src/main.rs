@@ -1,20 +1,13 @@
-use runner::Runner;
-use su_receiver::SuReceiver;
-use tx_receiver::TxReceiver;
-
-struct Runtime;
-impl Runner for Runtime {
-    type TxReceiver = TxReceiver;
-    type SuReceiver = SuReceiver;
-}
+use intmax_config::{Config, ConfigKind};
+use intmax_runner::gen_runner;
 
 fn run() {
-    Runtime::run();
-    loop {}
+    let config = Config::new(ConfigKind::DEV).expect("setup config file error.");
+    let runner = gen_runner(&config);
+    runner.run();
 }
 
-#[tokio::main]
-async fn main() {
+fn main() {
     println!("Hello, world!");
     run();
 }

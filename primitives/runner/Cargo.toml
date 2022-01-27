@@ -1,5 +1,5 @@
 [package]
-name = "runner"
+name = "intmax-runner"
 version = "0.1.0"
 edition = "2021"
 
@@ -8,7 +8,11 @@ edition = "2021"
 [dependencies]
 async-trait = "0.1.52"
 tokio = { version = "1", features = ["full"] }
+http = { package = "jsonrpc-http-server", version = "18.0.0" }
 
+intmax-config = { path = "../config" }
+intmax-rpc = { path = "../rpc" }
+intmax-json-rpc-api = { path = "../../infra/json-rpc-api" }
+intmax-json-rpc-servers = { path = "../../infra/json-rpc-servers" }
 [dev-dependencies]
 state = { version = "0.5" }
-

@@ -1,8 +1,12 @@
 [package]
-name = "intmax-zk"
+name = "intmax-json-rpc-servers"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+jsonrpc-core = "18.0.0"
+http = { package = "jsonrpc-http-server", version = "18.0.0" }
+
+serde_json = "1.0.8"

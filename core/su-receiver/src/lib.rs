@@ -1,11 +1,7 @@
-use async_trait::async_trait;
-use runner::Receiver;
-
 pub struct SuReceiver;
 
-#[async_trait]
-impl Receiver for SuReceiver {
-    async fn run() {
+impl SuReceiver {
+    pub fn run() {
         println!("TODO:: Su Receiver")
     }
 }
