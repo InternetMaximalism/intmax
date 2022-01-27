@@ -16,6 +16,12 @@ rustup update nightly
 cd cli/node && cargo run
 ```
 
+## How to Ping
+```sh
+> curl -X POST -H "Content-Type: application/json" -d '{"jsonrpc": "2.0", "method": "rpc_methods", "id": 1 }' 127.0.0.1:8081
+{"jsonrpc":"2.0","result":{"methods":["eth_sendTransaction"],"version":1},"id":1}
+```
+
 # Directory
 ```
 .
