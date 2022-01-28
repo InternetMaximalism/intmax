@@ -20,10 +20,7 @@ script = [
 ]
 
 [tasks.install_dep]
-alias = "linux_mac_install_dep"
-windows_alias = "windows_install_dep"
-
-[tasks.linux_mac_install_dep]
+script_runner = "@shell"
 script = [
     "rustup component add rustfmt",
     "rustup component add llvm-tools-preview",
@@ -31,17 +28,6 @@ script = [
     if ! [ -x "$(command -v grcov)" ]; then
         cargo install grcov
     fi
-    '''
-]
-
-[tasks.windows_install_dep]
-script = [
-    "rustup component add rustfmt",
-    "rustup component add llvm-tools-preview",
-    '''
-    if (!(Get-Command makers -errorAction SilentlyContinue)) {
-        cargo install grcov
-    }
     '''
 ]
 
