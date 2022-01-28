@@ -9,11 +9,13 @@ Install [rustup](https://www.rust-lang.org/tools/install).
 ```sh
 rustup override set nightly
 rustup update nightly
+cargo install --force cargo-make
+makers install_dep
 ```
 
 ## How to Run
 ```sh
-cd cli/node && cargo run
+makers start
 ```
 
 ## How to Ping
