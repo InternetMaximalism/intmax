@@ -35,7 +35,7 @@ jobs:
     - name: Install dependencies for win
       if: runner.os == 'Windows'
       run: |
-        if (!(Get-Command $cmdName -errorAction SilentlyContinue)) {
+        if (!(Get-Command makers -errorAction SilentlyContinue)) {
           cargo install cargo-make
         }
         makers install_dep
