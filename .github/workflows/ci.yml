@@ -29,6 +29,16 @@ jobs:
 
     - name: Check targets are installed correctly
       run: rustup target list --installed
+    # ref: https://github.com/actions/cache/blob/main/examples.md#rust---cargo
+    - uses: actions/cache@v2
+      with:
+        path: |
+          ~/.cargo/bin/
+          ~/.cargo/registry/index/
+          ~/.cargo/registry/cache/
+          ~/.cargo/git/db/
+          target/
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
     - name: Check fmt
       run: cargo fmt -- --check
