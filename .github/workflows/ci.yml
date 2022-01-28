@@ -21,18 +21,51 @@ jobs:
     - uses: hecrj/setup-rust-action@v1
       with:
         rust-version: 'nightly'
+    # ref: https://github.com/actions/cache/blob/main/examples.md#rust---cargo
+    - uses: actions/cache@v2
+      with:
+        path: |
+          ~/.cargo/bin/
+          ~/.cargo/registry/index/
+          ~/.cargo/registry/cache/
+          ~/.cargo/git/db/
+          target/
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
-    - name: Install rustfmt
-      run: rustup component add rustfmt
+    - name: Install dependencies for win
+      if: runner.os == 'Windows'
+      run: |
+        cargo install cargo-make || Write-Output "already installed"
+        makers install_dep
+    - name: Install dependencies for others
+      if: runner.os != 'Windows'
+      run: |
+        if ! [ -x "$(command -v makers)" ]; then
+          cargo install cargo-make
+        fi
+
+        makers install_dep
 
     - name: Check targets are installed correctly
       run: rustup target list --installed
-
     - name: Check fmt
       run: cargo fmt -- --check
 
     - name: Run all tests
-      run: cargo test --all
+      run: makers test
+
+    - name: generate coverage
+      if: runner.os == 'Linux'
+      run: makers coverage-ci
+    - name: Report code coverage
+      if: runner.os == 'Linux'
+      uses: zgosalvez/github-actions-report-lcov@v1
+      with:
+        coverage-files: coverage.lcov
+        # FIXME: We'll aim for about 90 later.
+        minimum-coverage: 50
+        artifact-name: code-coverage-report
+        github-token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build optimized binary
       run: cargo build --release --locked
