@@ -140,3 +140,5 @@ Last Modified:
 (timezone is UTC)
 
 *.profraw
+coverage/*
+*.lcov
