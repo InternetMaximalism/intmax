@@ -38,10 +38,6 @@ script = [
 script_runner = "powershell"
 script = [
     "rustup component add rustfmt",
-    "rustup component add llvm-tools-preview",
-    '''
-    cargo install grcov || Write-Output "already installed"
-    '''
 ]
 
 [tasks.start]
