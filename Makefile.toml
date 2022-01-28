@@ -1,0 +1,41 @@
+[env]
+RUSTFLAGS = "-Zinstrument-coverage"
+LLVM_PROFILE_FILE =  "coverage-%p-%m.profraw"
+
+[config]
+default_to_workspace = false
+skip_core_tasks = true
+
+
+[tasks.test]
+script = ["cargo test"]
+
+[tasks.build]
+script = ["cargo build"]
+
+[tasks.clean]
+script = [
+    "cargo clean",
+    "rm -rf coverage *.profraw"
+]
+
+[tasks.install_dep]
+script = [
+    "rustup component add rustfmt",
+    "rustup component add llvm-tools-preview",
+    "cargo install grcov"
+]
+
+[tasks.start]
+script = ["cargo run -p intmax-node"]
+
+[tasks.coverage]
+script = [
+    "grcov . --binary-path ./target/debug/ -s . -t html --branch --ignore-not-existing --ignore \"*cargo*\" -o ./coverage/",
+    "open coverage/index.html"
+]
+
+
+[tasks.coverage-ci]
+script = ["grcov . --binary-path ./target/debug/ -s . -t lcov --branch --ignore-not-existing --ignore \"*cargo*\" -o coverage.lcov"]
+
