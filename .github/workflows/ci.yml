@@ -32,7 +32,15 @@ jobs:
           target/
         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
-    - name: Install dep
+    - name: Install dependencies for win
+      if: runner.os == 'Windows'
+      run: |
+        if (!(Get-Command $cmdName -errorAction SilentlyContinue)) {
+          cargo install cargo-make
+        }
+        makers install_dep
+    - name: Install dependencies for others
+      if: runner.os != 'Windows'
       run: |
         if ! [ -x "$(command -v makers)" ]; then
           cargo install cargo-make
