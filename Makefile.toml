@@ -23,7 +23,11 @@ script = [
 script = [
     "rustup component add rustfmt",
     "rustup component add llvm-tools-preview",
-    "cargo install grcov"
+    '''
+    if ! [ -x "$(command -v grcov)" ]; then
+        cargo install grcov
+    fi
+    '''
 ]
 
 [tasks.start]

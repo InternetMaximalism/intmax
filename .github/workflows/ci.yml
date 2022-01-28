@@ -38,9 +38,7 @@ jobs:
           cargo install cargo-make
         fi
 
-        if ! [ -x "$(command -v grcov)" ]; then
-          makers install_dep
-        fi
+        makers install_dep
 
     - name: Check targets are installed correctly
       run: rustup target list --installed
