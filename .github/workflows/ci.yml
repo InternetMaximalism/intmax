@@ -35,9 +35,7 @@ jobs:
     - name: Install dependencies for win
       if: runner.os == 'Windows'
       run: |
-        if (!(Get-Command makers -errorAction SilentlyContinue)) {
-          cargo install cargo-make
-        }
+        cargo install cargo-make || Write-Output "already installed"
         makers install_dep
     - name: Install dependencies for others
       if: runner.os != 'Windows'
