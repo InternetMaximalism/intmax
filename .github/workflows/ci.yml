@@ -21,14 +21,6 @@ jobs:
     - uses: hecrj/setup-rust-action@v1
       with:
         rust-version: 'nightly'
-
-    - name: Install dep
-      run: |
-        cargo install --force cargo-make
-        makers install_dep
-
-    - name: Check targets are installed correctly
-      run: rustup target list --installed
     # ref: https://github.com/actions/cache/blob/main/examples.md#rust---cargo
     - uses: actions/cache@v2
       with:
@@ -40,6 +32,13 @@ jobs:
           target/
         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
+    - name: Install dep
+      run: |
+        cargo install --force cargo-make
+        makers install_dep
+
+    - name: Check targets are installed correctly
+      run: rustup target list --installed
     - name: Check fmt
       run: cargo fmt -- --check
 
