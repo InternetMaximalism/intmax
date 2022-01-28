@@ -46,8 +46,10 @@ jobs:
       run: makers test
 
     - name: generate coverage
+      if: runner.os == 'Linux'
       run: makers coverage-ci
     - name: Report code coverage
+      if: runner.os == 'Linux'
       uses: zgosalvez/github-actions-report-lcov@v1
       with:
         coverage-files: coverage.lcov
