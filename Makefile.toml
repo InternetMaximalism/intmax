@@ -40,9 +40,7 @@ script = [
     "rustup component add rustfmt",
     "rustup component add llvm-tools-preview",
     '''
-    if (!(Get-Command makers -errorAction SilentlyContinue)) {
-        cargo install grcov
-    }
+    cargo install grcov || Write-Output "already installed"
     '''
 ]
 
