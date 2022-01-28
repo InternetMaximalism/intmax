@@ -8,7 +8,7 @@ skip_core_tasks = true
 
 
 [tasks.test]
-script = ["cargo test"]
+script = ["cargo test --all"]
 
 [tasks.build]
 script = ["cargo build"]
