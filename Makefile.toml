@@ -20,10 +20,15 @@ script = [
 ]
 
 [tasks.install_dep]
-alias = "linux_mac_install_dep"
-windows_alias = "windows_install_dep"
+alias = "mac_windows_install_dep"
+linux_alias = "linux_install_dep"
 
-[tasks.linux_mac_install_dep]
+[tasks.mac_windows_install_dep]
+script = [
+    "rustup component add rustfmt",
+]
+
+[tasks.linux_install_dep]
 script = [
     "rustup component add rustfmt",
     "rustup component add llvm-tools-preview",
@@ -32,12 +37,6 @@ script = [
         cargo install grcov
     fi
     '''
-]
-
-[tasks.windows_install_dep]
-script_runner = "powershell"
-script = [
-    "rustup component add rustfmt",
 ]
 
 [tasks.start]
