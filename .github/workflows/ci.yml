@@ -34,7 +34,7 @@ jobs:
 
     - name: Install dep
       run: |
-        cargo install --force cargo-make
+        cargo install cargo-make
         makers install_dep
 
     - name: Check targets are installed correctly
