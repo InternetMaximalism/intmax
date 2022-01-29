@@ -25,7 +25,7 @@ impl Runner {
 use intmax_config::Config;
 use intmax_json_rpc_api::EthApi as EthApiT;
 use intmax_rpc::EthApi;
-use tx_receiver::{TxReceiver};
+use tx_receiver::TxReceiver;
 
 pub fn gen_runner(config: &Config) -> Runner {
     let tx_receiver = TxReceiver::new();

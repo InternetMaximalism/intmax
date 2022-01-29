@@ -1,6 +1,6 @@
-use ethereum_types::{H256};
+use ethereum_types::H256;
 use fc_rpc_core::types::TransactionRequest;
-use jsonrpc_core::{BoxFuture, Result, futures::future};
+use jsonrpc_core::{futures::future, BoxFuture, Result};
 
 use intmax_json_rpc_api::EthApi as EthApiT;
 use tx_receiver::{TxReceiver, TxReceiverTrait};
@@ -11,9 +11,7 @@ pub struct EthApi {
 
 impl EthApi {
     pub fn new(tx_receiver: TxReceiver) -> EthApi {
-        EthApi {
-            tx_receiver
-        }
+        EthApi { tx_receiver }
     }
 }
 

@@ -1,4 +1,4 @@
-use ethereum_types::{U256};
+use ethereum_types::U256;
 use fc_rpc_core::types::TransactionRequest;
 
 pub trait TxReceiverTrait {
@@ -34,10 +34,10 @@ impl TxReceiverTrait for TxReceiver {
 
 #[cfg(test)]
 mod tests {
+    use crate::{TxReceiver, TxReceiverTrait};
     use ethereum_types::U256;
     use fc_rpc_core::types::TransactionRequest;
     use jsonrpc_core::{Error, ErrorCode};
-    use crate::{TxReceiver, TxReceiverTrait};
 
     #[test]
     fn success_estimate_gas() {
