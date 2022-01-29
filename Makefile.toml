@@ -54,3 +54,6 @@ script = ["grcov . --binary-path ./target/debug/ -s . -t lcov --branch --ignore-
 
 [tasks.fix]
 script = ["cargo fix --allow-dirty"]
+
+[tasks.fmt]
+script = ["cargo fmt --all"]
