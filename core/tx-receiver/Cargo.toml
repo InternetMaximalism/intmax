@@ -6,3 +6,6 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+ethereum-types = "0.12"
+fc-rpc-core = { version = "1.0.0" }
+jsonrpc-core = "18.0.0"
