@@ -1,5 +1,5 @@
 use jsonrpc_core as rpc;
-use thiserror::Error;
+
 
 /// State RPC Result type.
 pub type Result<T> = std::result::Result<T, Error>;
@@ -69,18 +69,23 @@ impl From<Error> for rpc::Error {
 mod tests {
     use crate::error::Error;
     use jsonrpc_core as rpc;
-    use jsonrpc_core::{BoxFuture, Result};
+    use jsonrpc_core::{BoxFuture, Result as CoreResult};
     use ethereum_types::H256;
-    use tokio::test;
+    
 
-    fn raise_invalid_count() -> Result<H256> {
+    fn raise_invalid_count() -> Result<H256, Error> {
         let e = Error::InvalidCount { value: 0, max: 0 };
-        Err(From::from(e))
+        Err(e)
+    }
+
+    fn raiser() -> CoreResult<H256> {
+        let h = raise_invalid_count()?;
+        Ok(h)
     }
 
 
-    fn send_transaction() -> BoxFuture<Result<H256>> {
-        let h = match raise_invalid_count() {
+    fn send_transaction() -> BoxFuture<CoreResult<H256>> {
+        let h = match raiser() {
             Ok(h) => h,
             Err(e) => return Box::pin(async move { Err(e) })
         };
