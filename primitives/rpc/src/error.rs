@@ -1,8 +1,6 @@
 use ethereum_types::{H160, H256};
 use jsonrpc_core as rpc;
 
-
-
 /// State RPC Result type.
 pub type Result<T> = std::result::Result<T, Error>;
 
@@ -56,10 +54,10 @@ pub enum Error {
 impl From<Error> for rpc::Error {
     fn from(e: Error) -> Self {
         match e {
-            Error::InvalidStateDiff {..}
-            | Error::InvalidOneTimeAddress {..}
-            | Error::InvalidUserStateZKP {..}
-            | Error::InvalidSignedTxZKP {..} => rpc::Error {
+            Error::InvalidStateDiff { .. }
+            | Error::InvalidOneTimeAddress { .. }
+            | Error::InvalidUserStateZKP { .. }
+            | Error::InvalidSignedTxZKP { .. } => rpc::Error {
                 code: rpc::ErrorCode::InvalidParams,
                 message: format!("{}", e),
                 data: None,
@@ -168,12 +166,15 @@ mod tests {
 
         let e2: rpc::Error = e.into();
 
-        assert_eq!(e2.message, "OneTimeAddress(0x0000…0000) has already been used");
+        assert_eq!(
+            e2.message,
+            "OneTimeAddress(0x0000…0000) has already been used"
+        );
         assert_eq!(e2.code, rpc::ErrorCode::InvalidParams);
 
         // Error::InvalidUserStateZKP
         let e = Error::InvalidUserStateZKP {
-            user_state_proof: String::from("0x0101010101")
+            user_state_proof: String::from("0x0101010101"),
         };
 
         let e2: rpc::Error = e.into();
@@ -183,7 +184,7 @@ mod tests {
 
         // Error::InvalidUserStateZKP
         let e = Error::InvalidSignedTxZKP {
-            signed_tx_proof: String::from("0x0101010101")
+            signed_tx_proof: String::from("0x0101010101"),
         };
 
         let e2: rpc::Error = e.into();
