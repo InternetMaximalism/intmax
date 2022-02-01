@@ -1,7 +1,7 @@
 use ethereum_types::{H160, H256};
 use jsonrpc_core as rpc;
-use std::fmt::Formatter;
-use thiserror::Error;
+
+
 
 /// State RPC Result type.
 pub type Result<T> = std::result::Result<T, Error>;
