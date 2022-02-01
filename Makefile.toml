@@ -44,13 +44,23 @@ script = ["cargo run -p intmax-node"]
 
 [tasks.coverage]
 script = [
-    "grcov . --binary-path ./target/debug/ -s . -t html --branch --ignore-not-existing --ignore \"*cargo*\" -o ./coverage/",
+    """
+    grcov . --binary-path ./target/debug/ -s . -t html --branch --ignore-not-existing --ignore \"*cargo*\" -o ./coverage/ \
+        --excl-br-start "(grcov: ignore-start|mod tests)" --excl-start "(grcov: ignore-start|mod tests)" \
+        --excl-br-stop "grcov: ignore-end" --excl-stop "grcov: ignore-end"
+    """,
     "open coverage/index.html"
 ]
 
 
 [tasks.coverage-ci]
-script = ["grcov . --binary-path ./target/debug/ -s . -t lcov --branch --ignore-not-existing --ignore \"*cargo*\" -o coverage.lcov"]
+script = [
+    """
+    grcov . --binary-path ./target/debug/ -s . -t lcov --branch --ignore-not-existing --ignore \"*cargo*\" -o coverage.lcov \
+        --excl-br-start "(grcov: ignore-start|mod tests)" --excl-start "(grcov: ignore-start|mod tests)" \
+        --excl-br-stop "grcov: ignore-end" --excl-stop "grcov: ignore-end"
+    """
+]
 
 [tasks.fix]
 script = ["cargo fix --allow-dirty"]

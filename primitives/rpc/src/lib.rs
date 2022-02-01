@@ -5,6 +5,7 @@ use jsonrpc_core::{futures::future, BoxFuture, Result};
 use intmax_json_rpc_api::EthApi as EthApiT;
 use tx_receiver::{TxReceiver, TxReceiverTrait};
 
+mod error;
 pub struct EthApi {
     tx_receiver: TxReceiver,
 }
@@ -28,8 +29,10 @@ impl EthApiT for EthApi {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
     use fc_rpc_core::types::TransactionRequest;
+    use super::*;
+
+
 
     #[tokio::test]
     async fn it_works() {
