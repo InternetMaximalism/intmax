@@ -56,7 +56,7 @@ script = [
 [tasks.coverage-ci]
 script = [
     """
-    grcov . --binary-path ./target/debug/ -s . -t html --branch --ignore-not-existing --ignore \"*cargo*\" -o coverage.lcov \
+    grcov . --binary-path ./target/debug/ -s . -t lcov --branch --ignore-not-existing --ignore \"*cargo*\" -o coverage.lcov \
         --excl-br-start "(grcov: ignore-start|mod tests)" --excl-start "(grcov: ignore-start|mod tests)" \
         --excl-br-stop "grcov: ignore-end" --excl-stop "grcov: ignore-end"
     """
