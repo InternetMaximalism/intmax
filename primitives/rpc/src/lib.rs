@@ -4,6 +4,8 @@ use jsonrpc_core::{BoxFuture, Result};
 
 use intmax_json_rpc_api::EthApi as EthApiT;
 
+mod error;
+
 pub struct EthApi;
 
 impl EthApi {
@@ -20,8 +22,10 @@ impl EthApiT for EthApi {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
     use fc_rpc_core::types::TransactionRequest;
+
+    use super::*;
+
     #[test]
     fn it_works() {
         let eth_api = EthApi::new();

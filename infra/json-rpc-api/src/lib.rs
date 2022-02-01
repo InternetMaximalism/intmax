@@ -1,8 +1,7 @@
-use jsonrpc_core::{BoxFuture, Result};
-use jsonrpc_derive::rpc;
-
 use ethereum_types::H256;
 use fc_rpc_core::types::TransactionRequest;
+use jsonrpc_core::{BoxFuture, Result};
+use jsonrpc_derive::rpc;
 
 #[rpc(server)]
 pub trait EthApi {

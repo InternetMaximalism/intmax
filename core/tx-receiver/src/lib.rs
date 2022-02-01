@@ -1,5 +1,3 @@
-mod error;
-
 pub struct TxReceiver;
 
 impl TxReceiver {
