@@ -5,9 +5,11 @@ use jsonrpc_core::{BoxFuture, Result};
 use intmax_json_rpc_api::EthApi as EthApiT;
 use tx_receiver::{TxReceiver, TxReceiverTrait};
 
+
 pub struct EthApi {
     tx_receiver: TxReceiver,
 }
+
 
 impl EthApi {
     pub fn new(tx_receiver: TxReceiver) -> EthApi {
@@ -29,7 +31,6 @@ impl EthApiT for EthApi {
 #[cfg(test)]
 mod tests {
     use primitive_types::{H160, U256};
-
     use fc_rpc_core::types::TransactionRequest;
 
     use super::*;
