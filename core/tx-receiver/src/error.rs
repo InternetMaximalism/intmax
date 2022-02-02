@@ -49,6 +49,21 @@ pub enum Error {
         /// Invalid sign proof
         signed_tx_proof: String,
     },
+
+    /// Error when parameters are invalid.
+    #[error("{}", .message)]
+    InvalidParams { message: String },
+}
+
+impl Error {
+    pub fn invalid_params<M>(message: M) -> Self
+    where
+        M: Into<String>,
+    {
+        Error::InvalidParams {
+            message: message.into(),
+        }
+    }
 }
 
 impl From<Error> for rpc::Error {
@@ -60,6 +75,11 @@ impl From<Error> for rpc::Error {
             | Error::InvalidSignedTxZKP { .. } => rpc::Error {
                 code: rpc::ErrorCode::InvalidParams,
                 message: format!("{}", e),
+                data: None,
+            },
+            Error::InvalidParams { message } => rpc::Error {
+                code: rpc::ErrorCode::InvalidParams,
+                message: format!("{}", message),
                 data: None,
             },
             e => internal(e),
