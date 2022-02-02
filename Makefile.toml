@@ -63,7 +63,7 @@ script = [
 ]
 
 [tasks.fix]
-script = ["cargo fix --allow-dirty"]
+script = ["cargo fix --allow-dirty --allow-staged"]
 
 [tasks.fmt]
 script = ["cargo fmt --all"]
