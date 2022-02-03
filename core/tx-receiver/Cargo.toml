@@ -10,3 +10,5 @@ jsonrpc-core = "18.0.0"
 thiserror = "1.0"
 ethereum-types = "0.12"
 tokio = { version = "1", features = ["full"] }
+tracing = "0.1"
+tracing-subscriber = "0.2"
