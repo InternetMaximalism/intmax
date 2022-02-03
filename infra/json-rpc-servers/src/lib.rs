@@ -45,9 +45,9 @@ pub fn start_http_server(
 
 #[cfg(test)]
 mod tests {
-    use crate::middleware::{TracingMiddleware};
+    use crate::middleware::TracingMiddleware;
     use crate::{rpc_handler, start_http_server};
-    use jsonrpc_core::{MetaIoHandler};
+    use jsonrpc_core::MetaIoHandler;
     use reqwest;
     use reqwest::StatusCode;
 
