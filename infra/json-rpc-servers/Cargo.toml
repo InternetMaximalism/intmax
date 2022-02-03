@@ -12,3 +12,4 @@ http = { package = "jsonrpc-http-server", version = "18.0.0" }
 serde_json = "1.0.8"
 tracing = "0.1"
 tracing-subscriber = "0.2"
+tracing-futures = "0.2.5"
