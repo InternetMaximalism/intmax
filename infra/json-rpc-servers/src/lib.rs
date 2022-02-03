@@ -1,10 +1,17 @@
 use jsonrpc_core::IoHandlerExtension;
+use jsonrpc_core::MetaIoHandler;
 
-pub type RpcHandler = jsonrpc_core::IoHandler;
+use crate::middleware::{Meta, TracingMiddleware};
+
+pub type RpcHandler = jsonrpc_core::MetaIoHandler<Meta, TracingMiddleware>;
+
+mod middleware;
 
 /// Construct rpc `IoHandler`
-pub fn rpc_handler(extension: impl IoHandlerExtension<()>) -> RpcHandler {
-    let mut io = RpcHandler::new();
+pub fn rpc_handler(
+    extension: impl IoHandlerExtension<Meta>,
+) -> MetaIoHandler<Meta, TracingMiddleware> {
+    let mut io = MetaIoHandler::with_middleware(TracingMiddleware::default());
     extension.augment(&mut io);
 
     // add an endpoint to list all available methods.

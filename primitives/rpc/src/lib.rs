@@ -1,6 +1,7 @@
 use ethereum_types::H256;
 use fc_rpc_core::types::TransactionRequest;
 use jsonrpc_core::{BoxFuture, Result};
+use tracing::info_span;
 
 use intmax_json_rpc_api::EthApi as EthApiT;
 use tx_receiver::{TxReceiver, TxReceiverTrait};
@@ -20,7 +21,7 @@ impl EthApi {
 
 impl EthApiT for EthApi {
     fn send_transaction(&self, req: TransactionRequest) -> BoxFuture<Result<H256>> {
-        let _guard = tracing::info_span!("send_transaction").entered();
+        let _guard = info_span!("send_transaction").entered();
 
         match self.tx_receiver.validate_tx(&req) {
             Ok(()) => (),
