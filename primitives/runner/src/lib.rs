@@ -25,9 +25,15 @@ impl Runner {
 use intmax_config::Config;
 use intmax_json_rpc_api::EthApi as EthApiT;
 use intmax_rpc::EthApi;
+use tx_receiver::TxReceiver;
 
 pub fn gen_runner(config: &Config) -> Runner {
-    let eth_api = EthApi::new();
+    let tx_receiver = TxReceiver::new();
+    let eth_api = EthApi::new(tx_receiver);
+
+    // install global collector configured based on RUST_LOG env var.
+    tracing_subscriber::fmt().init();
+
     let rpc_handler = intmax_json_rpc_servers::rpc_handler(EthApiT::to_delegate(eth_api));
     let http_server = intmax_json_rpc_servers::start_http_server(
         &std::net::SocketAddr::new(

@@ -17,5 +17,7 @@ intmax-json-rpc-servers = { path = "../../infra/json-rpc-servers" }
 tracing = "0.1"
 tracing-subscriber = "0.2"
 tracing-futures = "0.2.5"
+tx-receiver = { path = "../../core/tx-receiver" }
+
 [dev-dependencies]
 state = { version = "0.5" }
