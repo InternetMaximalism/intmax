@@ -52,3 +52,47 @@ impl Middleware<Meta> for TracingMiddleware {
         ))
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::middleware::{Meta, TracingMiddleware};
+    use http::jsonrpc_core::Value;
+    use jsonrpc_core::{MetaIoHandler, Params};
+
+    #[test]
+    fn success_middleware_with_some_method() {
+        // for coverage
+        tracing_subscriber::fmt()
+            .with_max_level(tracing::Level::INFO)
+            .init();
+
+        let mut io = MetaIoHandler::with_middleware(TracingMiddleware::default());
+
+        io.add_method_with_meta("say_hello", |_params: Params, meta: Meta| async move {
+            Ok(Value::String(format!("Hello World: {}", meta.0)))
+        });
+
+        let request = r#"{"jsonrpc": "2.0", "method": "say_hello", "params": [42, 23], "id": 1}"#;
+        let response = r#"{"jsonrpc":"2.0","result":"Hello World: 5","id":1}"#;
+        assert_eq!(
+            io.handle_request_sync(request, Meta(5)),
+            Some(response.to_owned())
+        );
+
+        let m = Meta { 0: 0 };
+        println!("{:?}", m);
+    }
+
+    #[test]
+    #[should_panic]
+    fn success_middleware_without_response() {
+        let mut io = MetaIoHandler::with_middleware(TracingMiddleware::default());
+
+        io.add_method_with_meta("say_hello", |_params: Params, _meta: Meta| async move {
+            panic!("test");
+        });
+
+        let request = r#"{"jsonrpc": "2.0", "method": "say_hello", "params": [42, 23], "id": 1}"#;
+        io.handle_request_sync(request, Meta(5));
+    }
+}
