@@ -16,3 +16,6 @@ tokio = { version = "1", features = ["full"] }
 
 intmax-runner = { path = "../../primitives/runner" }
 intmax-config = { path = "../../primitives/config" }
+tracing = "0.1"
+tracing-subscriber = "0.2"
+tracing-futures = "0.2.5"

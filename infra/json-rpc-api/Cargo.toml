@@ -10,3 +10,13 @@ jsonrpc-core = "18.0.0"
 jsonrpc-derive = "18.0.0"
 ethereum-types = "0.12"
 fc-rpc-core = { version = "1.0.0" }
+tracing = "0.1"
+tracing-subscriber = "0.2"
+tracing-futures = "0.2.5"
+async-trait = "0.1.52"
+
+serde = { version = "1.0", features = ["derive"] }
+
+# Each data format lives in its own crate; the sample code below uses JSON
+# but you may be using a different one.
+serde_json = "1.0"

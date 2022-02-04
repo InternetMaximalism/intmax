@@ -11,6 +11,7 @@ pub trait TxReceiverTrait {
     fn put_tx_into_mempool(&self, tx: &TransactionRequest) -> Result<(), Error>;
 }
 
+#[derive(Debug)]
 pub struct TxReceiver;
 
 impl TxReceiver {

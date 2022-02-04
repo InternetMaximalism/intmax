@@ -15,4 +15,7 @@ tokio = { version = "1.16.1", features = ["full"] }
 thiserror = "1.0"
 
 intmax-json-rpc-api = { path = "../../infra/json-rpc-api" }
+tracing = "0.1"
+tracing-subscriber = "0.2"
+tracing-futures = "0.2.5"
 tx-receiver = { path = "../../core/tx-receiver" }
