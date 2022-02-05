@@ -1,3 +1,7 @@
-[rpc_server]
+[http_server]
 port = 8081
+ip = '127.0.0.1'
+
+[ws_server]
+port = 442
 ip = '127.0.0.1'
