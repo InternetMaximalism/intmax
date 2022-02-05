@@ -50,7 +50,8 @@ pub fn start_ws_server(addr: &std::net::SocketAddr, io: RpcHandler) -> std::io::
         .map_err(|err| match err {
             ws::Error::Io(io) => io,
             ws::Error::ConnectionClosed => std::io::ErrorKind::BrokenPipe.into(),
-            _ => {
+            er => {
+                println!("error: {:?}", er);
                 // output error log.
                 std::io::ErrorKind::Other.into()
             }
@@ -59,9 +60,11 @@ pub fn start_ws_server(addr: &std::net::SocketAddr, io: RpcHandler) -> std::io::
 
 #[cfg(test)]
 mod tests {
+
+    use super::*;
     use crate::middleware::TracingMiddleware;
-    use crate::{rpc_handler, start_http_server};
     use jsonrpc_core::MetaIoHandler;
+    use jsonrpc_ws_client::RpcChannel;
     use reqwest;
     use reqwest::StatusCode;
 
@@ -95,33 +98,20 @@ mod tests {
         tokio::runtime::Runtime::new().unwrap().block_on(client_fut);
     }
 
-    #[test]
-    fn success_ws_server_start() {
+    #[tokio::test]
+    async fn success_ws_server_start() {
         let io = MetaIoHandler::with_middleware(TracingMiddleware::default());
 
         let rpc_handler = rpc_handler(io);
-        let server = start_http_server(
-            &std::net::SocketAddr::new("127.0.0.1".parse().expect("set valid ip address."), 443),
+        let server = start_ws_server(
+            &std::net::SocketAddr::new("127.0.0.1".parse().expect("set valid ip address."), 3030),
             rpc_handler,
         );
 
         assert!(server.is_ok());
+        let client_fut = jsonrpc_ws_client::connect::<RpcChannel>("ws://127.0.0.1:3030").unwrap();
 
-        let client_fut = async move {
-            let c = reqwest::Client::new();
-            let res = c
-                .post("ws://127.0.0.1:443")
-                .json(&serde_json::json!({
-                    "jsonrpc": "2.0",
-                    "method": "rpc_methods",
-                    "id": 1
-                }))
-                .send()
-                .await
-                .expect("should success request");
-            assert_eq!(res.status(), StatusCode::OK);
-        };
-
-        tokio::runtime::Runtime::new().unwrap().block_on(client_fut);
+        // TODO: add webscoket test.
+        client_fut.wait();
     }
 }
