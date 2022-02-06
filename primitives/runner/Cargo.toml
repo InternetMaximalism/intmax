@@ -10,6 +10,7 @@ async-trait = "0.1.52"
 tokio = { version = "1", features = ["full"] }
 futures = "0.3.19"
 http = { package = "jsonrpc-http-server", version = "18.0.0" }
+ws = { package = "jsonrpc-ws-server", version = "18.0.0" }
 
 intmax-config = { path = "../config" }
 intmax-rpc = { path = "../rpc" }

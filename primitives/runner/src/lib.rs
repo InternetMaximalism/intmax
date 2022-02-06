@@ -1,6 +1,7 @@
 #[derive(Default)]
 pub struct Runner {
     http_server: Option<http::Server>,
+    ws_server: Option<ws::Server>,
 }
 
 impl Runner {
@@ -23,6 +24,11 @@ impl Runner {
         };
 
         // regist tasks: ws server
+        if let Some(server) = self.ws_server {
+            tasks.push(tokio::spawn(async move {
+                server.wait().expect("ws server setup error.")
+            }));
+        };
 
         println!("done");
         futures::future::join_all(tasks.into_iter()).await;
