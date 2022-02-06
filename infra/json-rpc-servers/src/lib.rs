@@ -63,8 +63,8 @@ mod tests {
 
     use super::*;
     use crate::middleware::TracingMiddleware;
-    use jsonrpc_core::MetaIoHandler;
-    use jsonrpc_ws_client::RpcChannel;
+    use jsonrpc_core::{MetaIoHandler, Params};
+    use jsonrpc_core_client::{transports, RawClient, RpcChannel};
     use reqwest;
     use reqwest::StatusCode;
 
@@ -98,8 +98,8 @@ mod tests {
         tokio::runtime::Runtime::new().unwrap().block_on(client_fut);
     }
 
-    #[tokio::test]
-    async fn success_ws_server_start() {
+    #[test]
+    fn success_ws_server_start() {
         let io = MetaIoHandler::with_middleware(TracingMiddleware::default());
 
         let rpc_handler = rpc_handler(io);
@@ -107,11 +107,18 @@ mod tests {
             &std::net::SocketAddr::new("127.0.0.1".parse().expect("set valid ip address."), 3030),
             rpc_handler,
         );
-
         assert!(server.is_ok());
-        let client_fut = jsonrpc_ws_client::connect::<RpcChannel>("ws://127.0.0.1:3030").unwrap();
 
-        // TODO: add webscoket test.
-        client_fut.wait();
+        let client_fut = transports::ws::connect::<RpcChannel>(
+            &url::Url::parse("ws://127.0.0.1:3030").expect("set valid ip address."),
+        );
+
+        tokio::runtime::Runtime::new()
+            .unwrap()
+            .block_on(async move {
+                let sender: RawClient = client_fut.await.expect("happen rpc error.").into();
+                let res = sender.call_method("rpc_methods", Params::None).await;
+                assert!(res.is_ok());
+            });
     }
 }
