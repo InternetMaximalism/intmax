@@ -1,6 +1,7 @@
 #[derive(Default)]
 pub struct Runner {
     http_server: Option<http::Server>,
+    ws_server: Option<ws::Server>,
 }
 
 impl Runner {
@@ -13,12 +14,27 @@ impl Runner {
         self
     }
 
-    pub fn run(self) {
-        println!("run!");
+    pub fn regist_ws_server(mut self, server: ws::Server) -> Runner {
+        self.ws_server = Some(server);
+        self
+    }
+
+    pub async fn run(self) {
+        let mut tasks = Vec::new();
+
+        // regist task: http server.
         if let Some(server) = self.http_server {
-            server.wait();
-        }
-        println!("done")
+            tasks.push(tokio::spawn(async move { server.wait() }));
+        };
+
+        // regist tasks: ws server
+        if let Some(server) = self.ws_server {
+            tasks.push(tokio::spawn(async move {
+                server.wait().expect("ws server setup error.")
+            }));
+        };
+
+        futures::future::join_all(tasks.into_iter()).await;
     }
 }
 
@@ -31,17 +47,32 @@ pub fn gen_runner(config: &Config) -> Runner {
     let tx_receiver = TxReceiver::new();
     let eth_api = EthApi::new(tx_receiver);
 
+    let gen_handler = |apis| intmax_json_rpc_servers::rpc_handler(EthApiT::to_delegate(apis));
     // install global collector configured based on RUST_LOG env var.
     tracing_subscriber::fmt().init();
 
     let rpc_handler = intmax_json_rpc_servers::rpc_handler(EthApiT::to_delegate(eth_api));
     let http_server = intmax_json_rpc_servers::start_http_server(
         &std::net::SocketAddr::new(
-            config.rpc_server.ip.parse().expect("set valid ip address."),
-            config.rpc_server.port,
+            config
+                .http_server
+                .ip
+                .parse()
+                .expect("set valid ip address."),
+            config.http_server.port,
+        ),
+        gen_handler(EthApi::new(TxReceiver::new())),
+    )
+    .expect("http server setup error.");
+    let ws_server = intmax_json_rpc_servers::start_ws_server(
+        &std::net::SocketAddr::new(
+            config.ws_server.ip.parse().expect("set valid ip address."),
+            config.ws_server.port,
         ),
         rpc_handler,
     )
     .expect("http server setup error.");
-    Runner::new().regist_http_server(http_server)
+    Runner::new()
+        .regist_http_server(http_server)
+        .regist_ws_server(ws_server)
 }

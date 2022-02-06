@@ -43,25 +43,42 @@ pub fn start_http_server(
     http::ServerBuilder::new(io).threads(1).start_http(addr)
 }
 
+pub fn start_ws_server(addr: &std::net::SocketAddr, io: RpcHandler) -> std::io::Result<ws::Server> {
+    println!("server address: {}", addr);
+    ws::ServerBuilder::new(io)
+        .start(addr)
+        .map_err(|err| match err {
+            ws::Error::Io(io) => io,
+            ws::Error::ConnectionClosed => std::io::ErrorKind::BrokenPipe.into(),
+            er => {
+                println!("error: {:?}", er);
+                // output error log.
+                std::io::ErrorKind::Other.into()
+            }
+        })
+}
+
 #[cfg(test)]
 mod tests {
+
+    use super::*;
     use crate::middleware::TracingMiddleware;
-    use crate::{rpc_handler, start_http_server};
-    use jsonrpc_core::MetaIoHandler;
+    use jsonrpc_core::{MetaIoHandler, Params};
+    use jsonrpc_core_client::{transports, RawClient, RpcChannel};
     use reqwest;
     use reqwest::StatusCode;
 
     #[test]
-    fn success_server_start() {
+    fn success_http_server_start() {
         let io = MetaIoHandler::with_middleware(TracingMiddleware::default());
 
         let rpc_handler = rpc_handler(io);
-        let http_server = start_http_server(
+        let server = start_http_server(
             &std::net::SocketAddr::new("127.0.0.1".parse().expect("set valid ip address."), 8080),
             rpc_handler,
         );
 
-        assert!(http_server.is_ok());
+        assert!(server.is_ok());
 
         let client_fut = async move {
             let c = reqwest::Client::new();
@@ -79,5 +96,29 @@ mod tests {
         };
 
         tokio::runtime::Runtime::new().unwrap().block_on(client_fut);
+    }
+
+    #[test]
+    fn success_ws_server_start() {
+        let io = MetaIoHandler::with_middleware(TracingMiddleware::default());
+
+        let rpc_handler = rpc_handler(io);
+        let server = start_ws_server(
+            &std::net::SocketAddr::new("127.0.0.1".parse().expect("set valid ip address."), 3030),
+            rpc_handler,
+        );
+        assert!(server.is_ok());
+
+        let client_fut = transports::ws::connect::<RpcChannel>(
+            &url::Url::parse("ws://127.0.0.1:3030").expect("set valid ip address."),
+        );
+
+        tokio::runtime::Runtime::new()
+            .unwrap()
+            .block_on(async move {
+                let sender: RawClient = client_fut.await.expect("happen rpc error.").into();
+                let res = sender.call_method("rpc_methods", Params::None).await;
+                assert!(res.is_ok());
+            });
     }
 }
