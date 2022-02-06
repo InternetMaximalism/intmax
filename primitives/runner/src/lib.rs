@@ -14,8 +14,12 @@ impl Runner {
         self
     }
 
+    pub fn regist_ws_server(mut self, server: ws::Server) -> Runner {
+        self.ws_server = Some(server);
+        self
+    }
+
     pub async fn run(self) {
-        println!("run!");
         let mut tasks = Vec::new();
 
         // regist task: http server.
@@ -30,7 +34,6 @@ impl Runner {
             }));
         };
 
-        println!("done");
         futures::future::join_all(tasks.into_iter()).await;
     }
 }
@@ -69,5 +72,7 @@ pub fn gen_runner(config: &Config) -> Runner {
         rpc_handler,
     )
     .expect("http server setup error.");
-    Runner::new().regist_http_server(http_server)
+    Runner::new()
+        .regist_http_server(http_server)
+        .regist_ws_server(ws_server)
 }
