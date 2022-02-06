@@ -15,6 +15,7 @@ members = [
     "primitives/zk",
     "infra/json-rpc-api",
     "infra/json-rpc-servers",
+    "infra/eth-provider"
 ]
 
 [profile.release]
