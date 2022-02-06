@@ -3,9 +3,9 @@ use convert_case::{Case, Casing};
 
 use ethcontract_generate::loaders::HardHatLoader;
 use ethcontract_generate::ContractBuilder;
+use std::env;
 use std::error::Error;
 use std::path::Path;
-use std::{env};
 
 const ARTIFACTS_PATH: &str = "infra/eth-provider/src/artifacts";
 const CONTRACTS_DEST_PATH: &str = "infra/eth-provider/src/contracts";
