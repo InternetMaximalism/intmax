@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -e;
+
+if git diff --staged --name-only | grep rs > /dev/null; then
+  makers fix-all
+fi
