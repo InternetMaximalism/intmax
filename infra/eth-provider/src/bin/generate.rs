@@ -21,7 +21,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     loop {
         let is_pj_root = dir.ends_with("intmax");
         if is_pj_root {
-            env::set_current_dir(&dir);
+            env::set_current_dir(&dir).expect("should set current dir");
             break;
         }
         dir.pop();
@@ -47,8 +47,9 @@ fn main() -> Result<(), Box<dyn Error>> {
         let file_name = c.name.clone().to_case(Case::Snake);
         println!("generate {}.rs ...", file_name);
 
-        let dest =
-            Path::new(&dir).join(CONTRACTS_DEST_PATH).join(format!("{}.rs", file_name));
+        let dest = Path::new(&dir)
+            .join(CONTRACTS_DEST_PATH)
+            .join(format!("{}.rs", file_name));
 
         let builder = ContractBuilder::new();
         builder
