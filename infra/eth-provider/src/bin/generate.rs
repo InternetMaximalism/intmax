@@ -32,9 +32,9 @@ fn main() -> Result<(), Box<dyn Error>> {
     let artifacts = HardHatLoader::new()
         .allow_network_by_name(network)
         .load_from_directory(ARTIFACTS_PATH)
-        .expect(format!("failed to load {:?}", ARTIFACTS_PATH).as_str());
+        .unwrap_or_else(|_| panic!("failed to load {:?}", ARTIFACTS_PATH));
 
-    if artifacts.len() == 0 {
+    if artifacts.is_empty() {
         panic!(
             "{} has no artifacts. Please check '{}' directory and eth-provider/README.md",
             network, ARTIFACTS_PATH
@@ -52,7 +52,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
         let builder = ContractBuilder::new();
         builder
-            .generate(&contract)
+            .generate(contract)
             .expect("failed to generate")
             .write_to_file(dest)
             .expect("failed to write rust file");

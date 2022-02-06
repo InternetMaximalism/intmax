@@ -44,7 +44,7 @@ impl Middleware<Meta> for TracingMiddleware {
                     }
                     info!(
                         "Processing took: {:.6}sec",
-                        start.elapsed().as_micros() as f64 / 1000_000.0
+                        start.elapsed().as_micros() as f64 / 1_000_000.0
                     );
                     res
                 })
@@ -79,7 +79,7 @@ mod tests {
             Some(response.to_owned())
         );
 
-        let m = Meta { 0: 0 };
+        let m = Meta(0);
         println!("{:?}", m);
     }
 
