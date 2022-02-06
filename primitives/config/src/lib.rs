@@ -50,7 +50,7 @@ mod tests {
         let config = Config::new(ConfigKind::TEST).expect("error new config");
         assert_eq!(config.http_server.port, 8081);
         assert_eq!(config.http_server.ip, "127.0.0.1");
-        assert_eq!(config.ws_server.port, 443);
+        assert_eq!(config.ws_server.port, 3030);
         assert_eq!(config.ws_server.ip, "127.0.0.1");
     }
 }
