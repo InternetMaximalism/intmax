@@ -48,7 +48,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         println!("generate {}.rs ...", file_name);
 
         let dest =
-            Path::new(&dir).join(format!("infra/eth-provider/src/contracts/{}.rs", file_name));
+            Path::new(&dir).join(CONTRACTS_DEST_PATH).join(format!("{}.rs", file_name));
 
         let builder = ContractBuilder::new();
         builder
