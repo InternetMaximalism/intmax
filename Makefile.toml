@@ -67,3 +67,10 @@ script = ["cargo fix --allow-dirty --allow-staged"]
 
 [tasks.fmt]
 script = ["cargo fmt --all"]
+
+[tasks.clippy]
+script = ["cargo clippy --fix --allow-dirty --allow-staged"]
+
+
+[tasks.fix-all]
+dependencies = ["fix", "fmt", "clippy"]
