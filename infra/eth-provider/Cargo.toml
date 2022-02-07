@@ -1,0 +1,21 @@
+[package]
+name = "eth-provider"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[[bin]]
+name = "generate"
+path = "src/bin/generate.rs"
+
+[dependencies]
+# It seems that web3 has not been released recently. We have no choice but to fix it with rev.
+web3 = { git = "https://github.com/tomusdrw/rust-web3.git", rev = "11b686e" }
+lock_api = "0.4.6"
+tokio = { version = "1.16.1", features = ["full"] }
+ethcontract = { version = "0.15.4" }
+ethcontract-generate = "0.15.4"
+convert_case = "0.5.0"
+project-root = "0.2.2"
+

@@ -11,6 +11,11 @@ rustup override set nightly
 rustup update nightly
 cargo install --force cargo-make
 makers install_dep
+
+# setting for git pre commit
+git config core.hooksPath .githooks
+chmod a+x .githooks/pre-commit
+chmod a+x .githooks/pre-push
 ```
 
 ## How to Run

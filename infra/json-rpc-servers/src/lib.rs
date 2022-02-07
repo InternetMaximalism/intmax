@@ -66,6 +66,7 @@ mod tests {
     use jsonrpc_core::{MetaIoHandler, Params};
     use jsonrpc_core_client::{transports, RawClient, RpcChannel};
     use reqwest;
+
     use reqwest::StatusCode;
 
     #[test]

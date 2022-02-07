@@ -79,7 +79,7 @@ impl From<Error> for rpc::Error {
             },
             Error::InvalidParams { message } => rpc::Error {
                 code: rpc::ErrorCode::InvalidParams,
-                message: format!("{}", message),
+                message,
                 data: None,
             },
             e => internal(e),
