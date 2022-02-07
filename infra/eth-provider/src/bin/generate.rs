@@ -41,7 +41,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
         let builder = ContractBuilder::new();
         builder
-            .generate(&contract)
+            .generate(contract)
             .expect("failed to generate")
             .write_to_file(dest)
             .expect("failed to write rust file");
