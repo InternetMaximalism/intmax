@@ -14,46 +14,34 @@ fn main() -> Result<(), Box<dyn Error>> {
     let args: Vec<String> = env::args().collect();
     let network = &args[1];
 
-    let mut dir = env::current_dir().expect("should get current_dir");
-    println!("current_dir: {:?}", dir);
+    let root = project_root::get_project_root().expect("failed to get project");
 
-    // cd pj root
-    loop {
-        let is_pj_root = dir.ends_with("intmax");
-        if is_pj_root {
-            env::set_current_dir(&dir).expect("should set current dir");
-            break;
-        }
-        dir.pop();
-    }
+    let artifacts_dir = Path::new(root.as_path()).join(ARTIFACTS_PATH);
+    let contracts_dir = Path::new(root.as_path()).join(CONTRACTS_DEST_PATH);
 
     println!("loading artifacts ...");
 
     let artifacts = HardHatLoader::new()
         .allow_network_by_name(network)
-        .load_from_directory(ARTIFACTS_PATH)
-        .unwrap_or_else(|_| panic!("failed to load {:?}", ARTIFACTS_PATH));
+        .load_from_directory(&artifacts_dir)
+        .unwrap_or_else(|_| panic!("failed to load {:?}", &artifacts_dir));
 
     if artifacts.is_empty() {
         panic!(
-            "{} has no artifacts. Please check '{}' directory and eth-provider/README.md",
-            network, ARTIFACTS_PATH
+            "{} has no artifacts. Please check '{:?}' directory and eth-provider/README.md",
+            network, &artifacts_dir
         );
     }
 
     for contract in artifacts.iter() {
-        let c = contract.clone();
-
-        let file_name = c.name.clone().to_case(Case::Snake);
+        let file_name = contract.name.to_case(Case::Snake);
         println!("generate {}.rs ...", file_name);
 
-        let dest = Path::new(&dir)
-            .join(CONTRACTS_DEST_PATH)
-            .join(format!("{}.rs", file_name));
+        let dest = contracts_dir.join(format!("{}.rs", file_name));
 
         let builder = ContractBuilder::new();
         builder
-            .generate(contract)
+            .generate(&contract)
             .expect("failed to generate")
             .write_to_file(dest)
             .expect("failed to write rust file");
