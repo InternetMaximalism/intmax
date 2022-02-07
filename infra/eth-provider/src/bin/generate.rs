@@ -20,7 +20,8 @@ fn main() -> Result<(), Box<dyn Error>> {
     let contracts_dir = Path::new(root.as_path()).join(CONTRACTS_DEST_PATH);
 
     if !contracts_dir.is_dir() {
-        std::fs::create_dir(&contracts_dir).unwrap_or_else(|_| panic!("failed to create_dir {:?}", &contracts_dir));
+        std::fs::create_dir(&contracts_dir)
+            .unwrap_or_else(|_| panic!("failed to create_dir {:?}", &contracts_dir));
     }
 
     println!("loading artifacts ...");
