@@ -2,7 +2,7 @@
 
 Int max operator node
 
-## Prepara
+## Prepare
 
 Install [rustup](https://www.rust-lang.org/tools/install).
 
