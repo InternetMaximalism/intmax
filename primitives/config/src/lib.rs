@@ -46,7 +46,7 @@ mod tests {
     use crate::*;
 
     #[test]
-    fn new_conifg() {
+    fn new_config() {
         let config = Config::new(ConfigKind::TEST).expect("error new config");
         assert_eq!(config.http_server.port, 8081);
         assert_eq!(config.http_server.ip, "127.0.0.1");
