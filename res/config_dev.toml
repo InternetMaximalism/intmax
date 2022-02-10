@@ -7,7 +7,7 @@ port = 3030
 ip = '127.0.0.1'
 
 [eth_server]
-# FIXME) dont'use production. address: 0x942Ca345ED744eE0bD26b0A40CE35bE432841867
+# address: 0x942Ca345ED744eE0bD26b0A40CE35bE432841867
 committer_key = '10d18ee85b1a2e1d4b47feed91074a6bb4a17b55005144338208a0be031752d3'
 port = 8545
 host = '127.0.0.1'

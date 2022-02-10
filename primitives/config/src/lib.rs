@@ -72,7 +72,7 @@ impl Config {
     pub fn new(kind: ConfigKind) -> Result<Self, ConfigError> {
         let name = match kind {
             ConfigKind::TEST => "config_test",
-            ConfigKind::DEV => "config",
+            ConfigKind::DEV => "config_dev",
             ConfigKind::MAIN => "config",
         };
         let mut s = ConfigRs::new();
