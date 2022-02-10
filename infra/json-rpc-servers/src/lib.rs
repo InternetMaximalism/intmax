@@ -65,7 +65,6 @@ mod tests {
     use crate::middleware::TracingMiddleware;
     use jsonrpc_core::{MetaIoHandler, Params};
     use jsonrpc_core_client::{transports, RawClient, RpcChannel};
-    
 
     use reqwest::StatusCode;
 
