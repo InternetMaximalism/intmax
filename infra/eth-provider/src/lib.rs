@@ -27,6 +27,7 @@ impl<T: Transport> EthProvider<T> {
 mod tests {
 
     use ethcontract::futures::io::{BufReader, BufWriter};
+    use ethcontract::futures::StreamExt;
     use ethcontract::{futures, Address, Http, H160};
 
     use crate::EthProvider;
@@ -38,7 +39,6 @@ mod tests {
     use ethcontract::web3::transports::WebSocket;
     use soketto::handshake;
     use tokio_stream::wrappers::TcpListenerStream;
-    use tokio_stream::StreamExt;
 
     trait EthAddress {
         fn to_eth_address(&self) -> H160;
