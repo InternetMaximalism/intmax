@@ -7,16 +7,16 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest]
 
     env:
       EXE_EXT: ${{ contains(matrix.os, 'windows') && '.exe' || '' }}
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Install LLVM (windows only)
-      if: runner.os == 'Windows'
-      run: choco install llvm clang
+    # - uses: actions/checkout@v2
+    # - name: Install LLVM (windows only)
+    #   if: runner.os == 'Windows'
+    #   run: choco install llvm clang
     - uses: hecrj/setup-rust-action@v1
       with:
         rust-version: 'nightly'
