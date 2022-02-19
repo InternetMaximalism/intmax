@@ -9,14 +9,15 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest]
 
-    # env:
-    #   EXE_EXT: ${{ contains(matrix.os, 'windows') && '.exe' || '' }}
+    env:
+      EXE_EXT: ${{ contains(matrix.os, 'windows') && '.exe' || '' }}
 
     steps:
-    # - uses: actions/checkout@v2
-    # - name: Install LLVM (windows only)
-    #   if: runner.os == 'Windows'
-    #   run: choco install llvm clang
+    - uses: actions/checkout@v2
+    - name: Install LLVM (windows only)
+      if: runner.os == 'Windows'
+      run: choco install llvm
+
     - uses: hecrj/setup-rust-action@v1
       with:
         rust-version: 'nightly'
@@ -31,11 +32,11 @@ jobs:
           target/
         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
-    # - name: Install dependencies for win
-    #   if: runner.os == 'Windows'
-    #   run: |
-    #     cargo install cargo-make || Write-Output "already installed"
-    #     makers install_dep
+    - name: Install dependencies for win
+      if: runner.os == 'Windows'
+      run: |
+        cargo install cargo-make || Write-Output "already installed"
+        makers install_dep
     - name: Install dependencies for others
       if: runner.os != 'Windows'
       run: |

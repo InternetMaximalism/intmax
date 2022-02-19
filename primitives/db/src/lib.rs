@@ -60,7 +60,7 @@ pub trait Database: Send + Sync {
 
     /// Check if the value exists in the database without retrieving it.
     fn contains(&self, key: &DBKey) -> bool {
-        if let Some(_) = self.get_raw(key) {
+        if self.get_raw(key).is_some() {
             return true;
         }
         false
