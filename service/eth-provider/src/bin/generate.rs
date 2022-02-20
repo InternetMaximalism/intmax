@@ -7,8 +7,8 @@ use std::env;
 use std::error::Error;
 use std::path::Path;
 
-const ARTIFACTS_PATH: &str = "infra/eth-provider/src/artifacts";
-const CONTRACTS_DEST_PATH: &str = "infra/eth-provider/src/contracts";
+const ARTIFACTS_PATH: &str = "service/eth-provider/src/artifacts";
+const CONTRACTS_DEST_PATH: &str = "service/eth-provider/src/contracts";
 
 fn main() -> Result<(), Box<dyn Error>> {
     let args: Vec<String> = env::args().collect();

@@ -9,13 +9,13 @@ members = [
     "core/tx-receiver",
     "primitives/config",
     "primitives/db",
-    "primitives/rpc",
-    "primitives/runner",
+    "primitives/json-rpc-api",
+    "primitives/json-rpc-servers",
     "primitives/verkle",
     "primitives/zk",
-    "infra/json-rpc-api",
-    "infra/json-rpc-servers",
-    "infra/eth-provider"
+    "service/rpc",
+    "service/runner",
+    "service/eth-provider",
 ]
 
 [profile.release]

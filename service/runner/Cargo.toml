@@ -12,10 +12,10 @@ futures = "0.3.19"
 http = { package = "jsonrpc-http-server", version = "18.0.0" }
 ws = { package = "jsonrpc-ws-server", version = "18.0.0" }
 
-intmax-config = { path = "../config" }
+intmax-config = { path = "../../primitives/config" }
 intmax-rpc = { path = "../rpc" }
-intmax-json-rpc-api = { path = "../../infra/json-rpc-api" }
-intmax-json-rpc-servers = { path = "../../infra/json-rpc-servers" }
+intmax-json-rpc-api = { path = "../../primitives/json-rpc-api" }
+intmax-json-rpc-servers = { path = "../../primitives/json-rpc-servers" }
 tracing = "0.1"
 tracing-subscriber = "0.2"
 tracing-futures = "0.2.5"
