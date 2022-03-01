@@ -6,13 +6,13 @@ pub enum StorageError {
 }
 
 pub struct Proof {
-    pub sibilings: Vec<Vec<u8>>,
+    pub siblings: Vec<Vec<u8>>,
     pub leaf: Vec<u8>,
 }
 
 pub type Result<T> = std::result::Result<T, StorageError>;
 
-pub trait VerckleStorage {
+pub trait VerkleStorage {
     fn inclusion_proof<K: Clone + AsRef<[u8]>>(&self, key: &K) -> Result<Proof>;
     fn verify_proof(&self, proof: &Proof) -> Result<()>;
     fn put<K: Clone + AsRef<[u8]>, V: Encode>(&self, key: &K, data: &V) -> Result<()>;
@@ -20,7 +20,7 @@ pub trait VerckleStorage {
     fn get<K: Clone + AsRef<[u8]>, V: Decode>(&self, key: &K) -> Option<V>;
 }
 
-pub trait VerckleSMTStorage: VerckleStorage {
+pub trait VerkleSMTStorage: VerkleStorage {
     fn inclusion_empty_proof<K: Clone + AsRef<[u8]>>(&self, key: &K) -> Result<Proof>;
 }
 
@@ -30,10 +30,10 @@ mod tests {
 
     struct MockVeckleStorage;
 
-    impl VerckleStorage for MockVeckleStorage {
+    impl VerkleStorage for MockVeckleStorage {
         fn inclusion_proof<K: Clone + AsRef<[u8]>>(&self, _key: &K) -> Result<Proof> {
             Ok(Proof {
-                sibilings: vec![],
+                siblings: vec![],
                 leaf: vec![],
             })
         }
@@ -51,10 +51,10 @@ mod tests {
         }
     }
 
-    impl VerckleSMTStorage for MockVeckleStorage {
+    impl VerkleSMTStorage for MockVeckleStorage {
         fn inclusion_empty_proof<K: Clone + AsRef<[u8]>>(&self, _key: &K) -> Result<Proof> {
             Ok(Proof {
-                sibilings: vec![],
+                siblings: vec![],
                 leaf: vec![],
             })
         }
